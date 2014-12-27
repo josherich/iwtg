@@ -1,6 +1,6 @@
 // var socket = io('https://iwantthatgame-josherich.c9.io');
-// var socket = io('http://198.199.112.127:3000');
-var socket = io('http://localhost:3000');
+var socket = io('http://198.199.112.127:3000');
+// var socket = io('http://localhost:3000');
 console.log('connect request initiated');
 var games = {};
 var allgames = {};

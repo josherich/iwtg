@@ -87,6 +87,10 @@ function notifyall() {
   broadcast('change', games);
 }
 
+function notify(socket) {
+  socket.emit('change', games);
+}
+
 function save(key, quan) {
   console.log('key saved: ' + key + ': ', quan);
   db.games.save({
@@ -100,7 +104,7 @@ io.on('connection', function(socket) {
   var self = this;
   var id = socket.id;
   sockets.push(socket);
-  // notifyall();
+  notify(socket);
 });
 
 function broadcast(event, data) {
