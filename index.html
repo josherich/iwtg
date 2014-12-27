@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>I WANT THAT GAME</title>
+
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+	var socket = io('http://alert.ap01.aws.af.cm:80');
+    console.log('a user connected');
+    socket.on('unchange', function(link) {
+    	console.log('game not available');
+    });
+    socket.on('change', function(link) {
+    	// chrome notif
+    	console.log('game available');
+    	var a = document.createElement('a');
+    	a.href = link;
+    	a.textContent = link;
+    	document.body.appendChild(a);
+    	window.alert('game available, go to ' + link);
+    });
+	</script>
+
+</head>
+<body>
+
+</body>
+</html>

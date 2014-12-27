@@ -1,0 +1,26 @@
+{
+   "background": {
+      "scripts": ["socket.io.js" , "background.js"]
+   },
+   "description": "I Want That Game",
+   "browser_action": {
+      "default_icon": "logo128.png",
+      "default_popup": "index.html",
+      "default_title": "I Want That Game"
+   },
+   "icons": {
+      "128": "logo128.png",
+      "16": "logo26.png",
+      "48": "logo48.png"
+   },
+   "manifest_version": 2,
+   "minimum_chrome_version": "17",
+   "name": "I Want That Game",
+   "permissions": [
+      "\u003Call_urls\u003E",
+      "notifications"
+   ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "1.4.1",
+   "web_accessible_resources": []
+}

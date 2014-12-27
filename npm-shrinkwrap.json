@@ -1,0 +1,693 @@
+{
+  "name": "alert-ps4",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": {
+      "version": "4.4.2",
+      "from": "express@",
+      "resolved": "http://registry.cnpmjs.org/express/download/express-4.4.2.tgz",
+      "dependencies": {
+        "accepts": {
+          "version": "1.0.2",
+          "from": "accepts@1.0.2",
+          "resolved": "http://registry.cnpmjs.org/accepts/download/accepts-1.0.2.tgz",
+          "dependencies": {
+            "mime": {
+              "version": "1.2.11",
+              "from": "mime@~1.2.11",
+              "resolved": "http://registry.cnpmjs.org/mime/download/mime-1.2.11.tgz"
+            },
+            "negotiator": {
+              "version": "0.4.5",
+              "from": "negotiator@0.4.5",
+              "resolved": "http://registry.cnpmjs.org/negotiator/download/negotiator-0.4.5.tgz"
+            }
+          }
+        },
+        "buffer-crc32": {
+          "version": "0.2.1",
+          "from": "buffer-crc32@0.2.1",
+          "resolved": "http://registry.cnpmjs.org/buffer-crc32/download/buffer-crc32-0.2.1.tgz"
+        },
+        "debug": {
+          "version": "1.0.1",
+          "from": "debug@1.0.1",
+          "resolved": "http://registry.cnpmjs.org/debug/download/debug-1.0.1.tgz",
+          "dependencies": {
+            "ms": {
+              "version": "0.6.2",
+              "from": "ms@0.6.2",
+              "resolved": "http://registry.cnpmjs.org/ms/download/ms-0.6.2.tgz"
+            }
+          }
+        },
+        "escape-html": {
+          "version": "1.0.1",
+          "from": "escape-html@1.0.1",
+          "resolved": "http://registry.cnpmjs.org/escape-html/download/escape-html-1.0.1.tgz"
+        },
+        "methods": {
+          "version": "1.0.1",
+          "from": "methods@1.0.1",
+          "resolved": "http://registry.cnpmjs.org/methods/download/methods-1.0.1.tgz"
+        },
+        "parseurl": {
+          "version": "1.0.1",
+          "from": "parseurl@1.0.1",
+          "resolved": "http://registry.cnpmjs.org/parseurl/download/parseurl-1.0.1.tgz"
+        },
+        "proxy-addr": {
+          "version": "1.0.1",
+          "from": "proxy-addr@1.0.1",
+          "resolved": "http://registry.cnpmjs.org/proxy-addr/download/proxy-addr-1.0.1.tgz",
+          "dependencies": {
+            "ipaddr.js": {
+              "version": "0.1.2",
+              "from": "ipaddr.js@0.1.2",
+              "resolved": "http://registry.cnpmjs.org/ipaddr.js/download/ipaddr.js-0.1.2.tgz"
+            }
+          }
+        },
+        "range-parser": {
+          "version": "1.0.0",
+          "from": "range-parser@1.0.0",
+          "resolved": "http://registry.cnpmjs.org/range-parser/download/range-parser-1.0.0.tgz"
+        },
+        "send": {
+          "version": "0.4.2",
+          "from": "send@0.4.2",
+          "resolved": "http://registry.cnpmjs.org/send/download/send-0.4.2.tgz",
+          "dependencies": {
+            "finished": {
+              "version": "1.2.1",
+              "from": "finished@1.2.1",
+              "resolved": "http://registry.cnpmjs.org/finished/download/finished-1.2.1.tgz"
+            },
+            "mime": {
+              "version": "1.2.11",
+              "from": "mime@~1.2.11",
+              "resolved": "http://registry.cnpmjs.org/mime/download/mime-1.2.11.tgz"
+            }
+          }
+        },
+        "serve-static": {
+          "version": "1.2.2",
+          "from": "serve-static@1.2.2",
+          "resolved": "http://registry.cnpmjs.org/serve-static/download/serve-static-1.2.2.tgz"
+        },
+        "type-is": {
+          "version": "1.2.1",
+          "from": "type-is@1.2.1",
+          "resolved": "http://registry.cnpmjs.org/type-is/download/type-is-1.2.1.tgz",
+          "dependencies": {
+            "mime-types": {
+              "version": "1.0.0",
+              "from": "mime-types@1.0.0",
+              "resolved": "http://registry.cnpmjs.org/mime-types/download/mime-types-1.0.0.tgz"
+            }
+          }
+        },
+        "vary": {
+          "version": "0.1.0",
+          "from": "vary@0.1.0",
+          "resolved": "http://registry.cnpmjs.org/vary/download/vary-0.1.0.tgz"
+        },
+        "cookie": {
+          "version": "0.1.2",
+          "from": "cookie@0.1.2",
+          "resolved": "http://registry.cnpmjs.org/cookie/download/cookie-0.1.2.tgz"
+        },
+        "fresh": {
+          "version": "0.2.2",
+          "from": "fresh@0.2.2",
+          "resolved": "http://registry.cnpmjs.org/fresh/download/fresh-0.2.2.tgz"
+        },
+        "cookie-signature": {
+          "version": "1.0.3",
+          "from": "cookie-signature@1.0.3",
+          "resolved": "http://registry.cnpmjs.org/cookie-signature/download/cookie-signature-1.0.3.tgz"
+        },
+        "merge-descriptors": {
+          "version": "0.0.2",
+          "from": "merge-descriptors@0.0.2",
+          "resolved": "http://registry.cnpmjs.org/merge-descriptors/download/merge-descriptors-0.0.2.tgz"
+        },
+        "utils-merge": {
+          "version": "1.0.0",
+          "from": "utils-merge@1.0.0",
+          "resolved": "http://registry.cnpmjs.org/utils-merge/download/utils-merge-1.0.0.tgz"
+        },
+        "qs": {
+          "version": "0.6.6",
+          "from": "qs@0.6.6"
+        },
+        "path-to-regexp": {
+          "version": "0.1.2",
+          "from": "path-to-regexp@0.1.2",
+          "resolved": "http://registry.cnpmjs.org/path-to-regexp/download/path-to-regexp-0.1.2.tgz"
+        }
+      }
+    },
+    "iconv-lite": {
+      "version": "0.4.0",
+      "from": "iconv-lite@"
+    },
+    "jsdom": {
+      "version": "0.10.6",
+      "from": "jsdom@",
+      "resolved": "http://registry.cnpmjs.org/jsdom/download/jsdom-0.10.6.tgz",
+      "dependencies": {
+        "htmlparser2": {
+          "version": "3.7.2",
+          "from": "htmlparser2@>= 3.1.5 <4",
+          "resolved": "http://registry.cnpmjs.org/htmlparser2/download/htmlparser2-3.7.2.tgz",
+          "dependencies": {
+            "domhandler": {
+              "version": "2.2.0",
+              "from": "domhandler@2.2"
+            },
+            "domutils": {
+              "version": "1.5.0",
+              "from": "domutils@1.5",
+              "resolved": "http://registry.cnpmjs.org/domutils/download/domutils-1.5.0.tgz"
+            },
+            "domelementtype": {
+              "version": "1.1.1",
+              "from": "domelementtype@1"
+            },
+            "readable-stream": {
+              "version": "1.1.13-1",
+              "from": "readable-stream@1.1",
+              "dependencies": {
+                "core-util-is": {
+                  "version": "1.0.1",
+                  "from": "core-util-is@~1.0.0"
+                },
+                "isarray": {
+                  "version": "0.0.1",
+                  "from": "isarray@0.0.1",
+                  "resolved": "http://registry.cnpmjs.org/isarray/download/isarray-0.0.1.tgz"
+                },
+                "string_decoder": {
+                  "version": "0.10.25-1",
+                  "from": "string_decoder@~0.10.x"
+                },
+                "inherits": {
+                  "version": "2.0.1",
+                  "from": "inherits@~2.0.1"
+                }
+              }
+            },
+            "entities": {
+              "version": "1.0.0",
+              "from": "entities@1.0"
+            }
+          }
+        },
+        "nwmatcher": {
+          "version": "1.3.3",
+          "from": "nwmatcher@~1.3.2",
+          "resolved": "http://registry.cnpmjs.org/nwmatcher/download/nwmatcher-1.3.3.tgz"
+        },
+        "request": {
+          "version": "2.36.0",
+          "from": "request@2.x",
+          "dependencies": {
+            "qs": {
+              "version": "0.6.6",
+              "from": "qs@~0.6.0"
+            },
+            "json-stringify-safe": {
+              "version": "5.0.0",
+              "from": "json-stringify-safe@~5.0.0"
+            },
+            "mime": {
+              "version": "1.2.11",
+              "from": "mime@~1.2.9",
+              "resolved": "http://registry.cnpmjs.org/mime/download/mime-1.2.11.tgz"
+            },
+            "forever-agent": {
+              "version": "0.5.2",
+              "from": "forever-agent@~0.5.0"
+            },
+            "node-uuid": {
+              "version": "1.4.1",
+              "from": "node-uuid@~1.4.0"
+            },
+            "tough-cookie": {
+              "version": "0.12.1",
+              "from": "tough-cookie@>=0.12.0",
+              "dependencies": {
+                "punycode": {
+                  "version": "1.2.4",
+                  "from": "punycode@>=0.2.0"
+                }
+              }
+            },
+            "form-data": {
+              "version": "0.1.3",
+              "from": "form-data@~0.1.0",
+              "dependencies": {
+                "combined-stream": {
+                  "version": "0.0.4",
+                  "from": "combined-stream@~0.0.4",
+                  "dependencies": {
+                    "delayed-stream": {
+                      "version": "0.0.5",
+                      "from": "delayed-stream@0.0.5",
+                      "resolved": "http://registry.cnpmjs.org/delayed-stream/download/delayed-stream-0.0.5.tgz"
+                    }
+                  }
+                },
+                "async": {
+                  "version": "0.9.0",
+                  "from": "async@~0.9.0"
+                }
+              }
+            },
+            "tunnel-agent": {
+              "version": "0.4.0",
+              "from": "tunnel-agent@~0.4.0"
+            },
+            "http-signature": {
+              "version": "0.10.0",
+              "from": "http-signature@~0.10.0",
+              "dependencies": {
+                "assert-plus": {
+                  "version": "0.1.2",
+                  "from": "assert-plus@0.1.2",
+                  "resolved": "http://registry.cnpmjs.org/assert-plus/download/assert-plus-0.1.2.tgz"
+                },
+                "asn1": {
+                  "version": "0.1.11",
+                  "from": "asn1@0.1.11",
+                  "resolved": "http://registry.cnpmjs.org/asn1/download/asn1-0.1.11.tgz"
+                },
+                "ctype": {
+                  "version": "0.5.2",
+                  "from": "ctype@0.5.2",
+                  "resolved": "http://registry.cnpmjs.org/ctype/download/ctype-0.5.2.tgz"
+                }
+              }
+            },
+            "oauth-sign": {
+              "version": "0.3.0",
+              "from": "oauth-sign@~0.3.0"
+            },
+            "hawk": {
+              "version": "1.0.0",
+              "from": "hawk@~1.0.0",
+              "dependencies": {
+                "hoek": {
+                  "version": "0.9.1",
+                  "from": "hoek@0.9.x"
+                },
+                "boom": {
+                  "version": "0.4.2",
+                  "from": "boom@0.4.x"
+                },
+                "cryptiles": {
+                  "version": "0.2.2",
+                  "from": "cryptiles@0.2.x"
+                },
+                "sntp": {
+                  "version": "0.2.4",
+                  "from": "sntp@0.2.x"
+                }
+              }
+            },
+            "aws-sign2": {
+              "version": "0.5.0",
+              "from": "aws-sign2@~0.5.0"
+            }
+          }
+        },
+        "xmlhttprequest": {
+          "version": "1.6.0",
+          "from": "xmlhttprequest@>=1.5.0"
+        },
+        "cssom": {
+          "version": "0.3.0",
+          "from": "cssom@~0.3.0"
+        },
+        "cssstyle": {
+          "version": "0.2.14",
+          "from": "cssstyle@~0.2.9",
+          "resolved": "http://registry.cnpmjs.org/cssstyle/download/cssstyle-0.2.14.tgz"
+        },
+        "contextify": {
+          "version": "0.1.8",
+          "from": "contextify@~0.1.5",
+          "resolved": "http://registry.cnpmjs.org/contextify/download/contextify-0.1.8.tgz",
+          "dependencies": {
+            "bindings": {
+              "version": "1.2.0",
+              "from": "bindings@*",
+              "resolved": "http://registry.cnpmjs.org/bindings/download/bindings-1.2.0.tgz"
+            },
+            "nan": {
+              "version": "1.0.0",
+              "from": "nan@~1.0.0",
+              "resolved": "http://registry.cnpmjs.org/nan/download/nan-1.0.0.tgz"
+            }
+          }
+        }
+      }
+    },
+    "socket.io": {
+      "version": "1.0.4",
+      "from": "socket.io@",
+      "resolved": "http://registry.cnpmjs.org/socket.io/download/socket.io-1.0.4.tgz",
+      "dependencies": {
+        "engine.io": {
+          "version": "1.2.2",
+          "from": "engine.io@1.2.2",
+          "resolved": "http://registry.cnpmjs.org/engine.io/download/engine.io-1.2.2.tgz",
+          "dependencies": {
+            "debug": {
+              "version": "0.6.0",
+              "from": "debug@0.6.0",
+              "resolved": "http://registry.cnpmjs.org/debug/download/debug-0.6.0.tgz"
+            },
+            "ws": {
+              "version": "0.4.31",
+              "from": "ws@0.4.31",
+              "resolved": "http://registry.cnpmjs.org/ws/download/ws-0.4.31.tgz",
+              "dependencies": {
+                "commander": {
+                  "version": "0.6.1",
+                  "from": "commander@~0.6.1",
+                  "resolved": "http://registry.cnpmjs.org/commander/download/commander-0.6.1.tgz"
+                },
+                "nan": {
+                  "version": "0.3.2",
+                  "from": "nan@~0.3.0"
+                },
+                "tinycolor": {
+                  "version": "0.0.1",
+                  "from": "tinycolor@0.x"
+                },
+                "options": {
+                  "version": "0.0.5",
+                  "from": "options@>=0.0.5"
+                }
+              }
+            },
+            "engine.io-parser": {
+              "version": "1.0.6",
+              "from": "engine.io-parser@1.0.6",
+              "resolved": "http://registry.cnpmjs.org/engine.io-parser/download/engine.io-parser-1.0.6.tgz",
+              "dependencies": {
+                "base64-arraybuffer": {
+                  "version": "0.1.2",
+                  "from": "base64-arraybuffer@0.1.2",
+                  "resolved": "http://registry.cnpmjs.org/base64-arraybuffer/download/base64-arraybuffer-0.1.2.tgz"
+                },
+                "after": {
+                  "version": "0.8.1",
+                  "from": "after@0.8.1",
+                  "resolved": "http://registry.cnpmjs.org/after/download/after-0.8.1.tgz"
+                },
+                "arraybuffer.slice": {
+                  "version": "0.0.6",
+                  "from": "arraybuffer.slice@0.0.6",
+                  "resolved": "http://registry.cnpmjs.org/arraybuffer.slice/download/arraybuffer.slice-0.0.6.tgz"
+                },
+                "blob": {
+                  "version": "0.0.2",
+                  "from": "blob@0.0.2",
+                  "resolved": "http://registry.cnpmjs.org/blob/download/blob-0.0.2.tgz"
+                },
+                "utf8": {
+                  "version": "2.0.0",
+                  "from": "utf8@2.0.0",
+                  "resolved": "http://registry.cnpmjs.org/utf8/download/utf8-2.0.0.tgz"
+                }
+              }
+            },
+            "base64id": {
+              "version": "0.1.0",
+              "from": "base64id@0.1.0"
+            }
+          }
+        },
+        "socket.io-parser": {
+          "version": "2.2.0",
+          "from": "socket.io-parser@2.2.0",
+          "resolved": "http://registry.cnpmjs.org/socket.io-parser/download/socket.io-parser-2.2.0.tgz",
+          "dependencies": {
+            "json3": {
+              "version": "3.2.6",
+              "from": "json3@3.2.6",
+              "resolved": "http://registry.cnpmjs.org/json3/download/json3-3.2.6.tgz"
+            },
+            "emitter": {
+              "version": "1.0.1",
+              "from": "http://github.com/component/emitter/archive/1.0.1.tar.gz",
+              "resolved": "http://github.com/component/emitter/archive/1.0.1.tar.gz",
+              "dependencies": {
+                "indexof": {
+                  "version": "0.0.1",
+                  "from": "indexof@0.0.1",
+                  "resolved": "http://registry.cnpmjs.org/indexof/download/indexof-0.0.1.tgz"
+                }
+              }
+            },
+            "isarray": {
+              "version": "0.0.1",
+              "from": "isarray@0.0.1",
+              "resolved": "http://registry.cnpmjs.org/isarray/download/isarray-0.0.1.tgz"
+            }
+          }
+        },
+        "socket.io-client": {
+          "version": "1.0.4",
+          "from": "socket.io-client@1.0.4",
+          "resolved": "http://registry.cnpmjs.org/socket.io-client/download/socket.io-client-1.0.4.tgz",
+          "dependencies": {
+            "engine.io-client": {
+              "version": "1.2.2",
+              "from": "engine.io-client@1.2.2",
+              "resolved": "http://registry.cnpmjs.org/engine.io-client/download/engine.io-client-1.2.2.tgz",
+              "dependencies": {
+                "has-cors": {
+                  "version": "1.0.3",
+                  "from": "has-cors@1.0.3",
+                  "resolved": "http://registry.cnpmjs.org/has-cors/download/has-cors-1.0.3.tgz",
+                  "dependencies": {
+                    "global": {
+                      "version": "2.0.1",
+                      "from": "https://github.com/component/global/archive/v2.0.1.tar.gz",
+                      "resolved": "https://github.com/component/global/archive/v2.0.1.tar.gz"
+                    }
+                  }
+                },
+                "ws": {
+                  "version": "0.4.31",
+                  "from": "ws@0.4.31",
+                  "resolved": "http://registry.cnpmjs.org/ws/download/ws-0.4.31.tgz",
+                  "dependencies": {
+                    "commander": {
+                      "version": "0.6.1",
+                      "from": "commander@~0.6.1",
+                      "resolved": "http://registry.cnpmjs.org/commander/download/commander-0.6.1.tgz"
+                    },
+                    "nan": {
+                      "version": "0.3.2",
+                      "from": "nan@~0.3.0"
+                    },
+                    "tinycolor": {
+                      "version": "0.0.1",
+                      "from": "tinycolor@0.x"
+                    },
+                    "options": {
+                      "version": "0.0.5",
+                      "from": "options@>=0.0.5"
+                    }
+                  }
+                },
+                "xmlhttprequest": {
+                  "version": "1.5.0",
+                  "from": "https://github.com/LearnBoost/node-XMLHttpRequest/archive/0f36d0b5ebc03d85f860d42a64ae9791e1daa433.tar.gz",
+                  "resolved": "https://github.com/LearnBoost/node-XMLHttpRequest/archive/0f36d0b5ebc03d85f860d42a64ae9791e1daa433.tar.gz"
+                },
+                "engine.io-parser": {
+                  "version": "1.0.6",
+                  "from": "engine.io-parser@1.0.6",
+                  "resolved": "http://registry.cnpmjs.org/engine.io-parser/download/engine.io-parser-1.0.6.tgz",
+                  "dependencies": {
+                    "base64-arraybuffer": {
+                      "version": "0.1.2",
+                      "from": "base64-arraybuffer@0.1.2",
+                      "resolved": "http://registry.cnpmjs.org/base64-arraybuffer/download/base64-arraybuffer-0.1.2.tgz"
+                    },
+                    "after": {
+                      "version": "0.8.1",
+                      "from": "after@0.8.1",
+                      "resolved": "http://registry.cnpmjs.org/after/download/after-0.8.1.tgz"
+                    },
+                    "arraybuffer.slice": {
+                      "version": "0.0.6",
+                      "from": "arraybuffer.slice@0.0.6",
+                      "resolved": "http://registry.cnpmjs.org/arraybuffer.slice/download/arraybuffer.slice-0.0.6.tgz"
+                    },
+                    "blob": {
+                      "version": "0.0.2",
+                      "from": "blob@0.0.2",
+                      "resolved": "http://registry.cnpmjs.org/blob/download/blob-0.0.2.tgz"
+                    },
+                    "utf8": {
+                      "version": "2.0.0",
+                      "from": "utf8@2.0.0",
+                      "resolved": "http://registry.cnpmjs.org/utf8/download/utf8-2.0.0.tgz"
+                    }
+                  }
+                },
+                "parsejson": {
+                  "version": "0.0.1",
+                  "from": "parsejson@0.0.1",
+                  "resolved": "http://registry.cnpmjs.org/parsejson/download/parsejson-0.0.1.tgz",
+                  "dependencies": {
+                    "better-assert": {
+                      "version": "1.0.0",
+                      "from": "better-assert@~1.0.0",
+                      "resolved": "http://registry.cnpmjs.org/better-assert/download/better-assert-1.0.0.tgz",
+                      "dependencies": {
+                        "callsite": {
+                          "version": "1.0.0",
+                          "from": "callsite@1.0.0",
+                          "resolved": "http://registry.cnpmjs.org/callsite/download/callsite-1.0.0.tgz"
+                        }
+                      }
+                    }
+                  }
+                },
+                "parseqs": {
+                  "version": "0.0.2",
+                  "from": "parseqs@0.0.2",
+                  "resolved": "http://registry.cnpmjs.org/parseqs/download/parseqs-0.0.2.tgz",
+                  "dependencies": {
+                    "better-assert": {
+                      "version": "1.0.0",
+                      "from": "better-assert@~1.0.0",
+                      "resolved": "http://registry.cnpmjs.org/better-assert/download/better-assert-1.0.0.tgz",
+                      "dependencies": {
+                        "callsite": {
+                          "version": "1.0.0",
+                          "from": "callsite@1.0.0",
+                          "resolved": "http://registry.cnpmjs.org/callsite/download/callsite-1.0.0.tgz"
+                        }
+                      }
+                    }
+                  }
+                },
+                "inherits": {
+                  "version": "2.0.1",
+                  "from": "inherits@2.0.1",
+                  "resolved": "http://registry.cnpmjs.org/inherits/download/inherits-2.0.1.tgz"
+                }
+              }
+            },
+            "emitter": {
+              "version": "1.0.1",
+              "from": "http://github.com/component/emitter/archive/1.0.1.tar.gz",
+              "resolved": "http://github.com/component/emitter/archive/1.0.1.tar.gz"
+            },
+            "bind": {
+              "version": "0.0.1",
+              "from": "http://github.com/component/bind/archive/0.0.1.tar.gz",
+              "resolved": "http://github.com/component/bind/archive/0.0.1.tar.gz"
+            },
+            "object-component": {
+              "version": "0.0.3",
+              "from": "object-component@0.0.3",
+              "resolved": "http://registry.cnpmjs.org/object-component/download/object-component-0.0.3.tgz"
+            },
+            "parseuri": {
+              "version": "0.0.2",
+              "from": "parseuri@0.0.2",
+              "resolved": "http://registry.cnpmjs.org/parseuri/download/parseuri-0.0.2.tgz",
+              "dependencies": {
+                "better-assert": {
+                  "version": "1.0.0",
+                  "from": "better-assert@~1.0.0",
+                  "resolved": "http://registry.cnpmjs.org/better-assert/download/better-assert-1.0.0.tgz",
+                  "dependencies": {
+                    "callsite": {
+                      "version": "1.0.0",
+                      "from": "callsite@1.0.0",
+                      "resolved": "http://registry.cnpmjs.org/callsite/download/callsite-1.0.0.tgz"
+                    }
+                  }
+                }
+              }
+            },
+            "to-array": {
+              "version": "0.1.3",
+              "from": "to-array@0.1.3",
+              "resolved": "http://registry.cnpmjs.org/to-array/download/to-array-0.1.3.tgz"
+            },
+            "indexof": {
+              "version": "0.0.1",
+              "from": "indexof@0.0.1",
+              "resolved": "http://registry.cnpmjs.org/indexof/download/indexof-0.0.1.tgz"
+            }
+          }
+        },
+        "socket.io-adapter": {
+          "version": "0.2.0",
+          "from": "socket.io-adapter@0.2.0",
+          "resolved": "http://registry.cnpmjs.org/socket.io-adapter/download/socket.io-adapter-0.2.0.tgz",
+          "dependencies": {
+            "socket.io-parser": {
+              "version": "2.1.2",
+              "from": "socket.io-parser@2.1.2",
+              "resolved": "http://registry.cnpmjs.org/socket.io-parser/download/socket.io-parser-2.1.2.tgz",
+              "dependencies": {
+                "json3": {
+                  "version": "3.2.6",
+                  "from": "json3@3.2.6",
+                  "resolved": "http://registry.cnpmjs.org/json3/download/json3-3.2.6.tgz"
+                },
+                "emitter": {
+                  "version": "1.0.1",
+                  "from": "http://github.com/component/emitter/archive/1.0.1.tar.gz",
+                  "resolved": "http://github.com/component/emitter/archive/1.0.1.tar.gz",
+                  "dependencies": {
+                    "indexof": {
+                      "version": "0.0.1",
+                      "from": "indexof@0.0.1",
+                      "resolved": "http://registry.cnpmjs.org/indexof/download/indexof-0.0.1.tgz"
+                    }
+                  }
+                },
+                "isarray": {
+                  "version": "0.0.1",
+                  "from": "isarray@0.0.1",
+                  "resolved": "http://registry.cnpmjs.org/isarray/download/isarray-0.0.1.tgz"
+                }
+              }
+            }
+          }
+        },
+        "has-binary-data": {
+          "version": "0.1.1",
+          "from": "has-binary-data@0.1.1",
+          "resolved": "http://registry.cnpmjs.org/has-binary-data/download/has-binary-data-0.1.1.tgz",
+          "dependencies": {
+            "isarray": {
+              "version": "0.0.1",
+              "from": "isarray@0.0.1",
+              "resolved": "http://registry.cnpmjs.org/isarray/download/isarray-0.0.1.tgz"
+            }
+          }
+        },
+        "debug": {
+          "version": "0.7.4",
+          "from": "debug@0.7.4",
+          "resolved": "http://registry.cnpmjs.org/debug/download/debug-0.7.4.tgz"
+        }
+      }
+    }
+  }
+}

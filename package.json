@@ -1,0 +1,37 @@
+{
+  "name": "alert-ps4",
+  "version": "0.0.1",
+  "description": "get game alert",
+  "main": "app.js",
+  "dependencies": {
+    "socket.io": "http://registry.cnpmjs.org/socket.io/download/socket.io-1.0.4.tgz",
+    "express": "^4.4.2",
+    "cheerio": "^0.17.0",
+    "request": "^2.36.0",
+    "iconv-lite": "^0.4.0"
+  },
+  "devDependencies": {
+    "loopback-datasource-juggler": "^1.5.5",
+    "loopback": "^1.8.8"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/josherich/iwtg.git"
+  },
+  "keywords": [
+    "alert",
+    "game",
+    "socket.io",
+    "chrome",
+    "extension"
+  ],
+  "author": "josherichchen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/josherich/iwtg/issues"
+  },
+  "homepage": "https://github.com/josherich/iwtg"
+}
