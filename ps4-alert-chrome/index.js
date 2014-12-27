@@ -2,9 +2,9 @@ var bg = chrome.extension.getBackgroundPage();
 var list = document.querySelector('#list');
 var add = document.querySelector('#add');
 var input = document.querySelector('#new')
-inflate(bg.availables);
+inflate(bg.availables, bg.allgames);
 
-function inflate(availables) {
+function inflate(availables, allgames) {
 
   list.innerHTML = "";
 
@@ -13,23 +13,33 @@ function inflate(availables) {
     var p = document.createElement('p');
     var del = document.createElement('button');
 
-    p.textContent = decodeURIComponent(escape(window.atob(k))) + ": " + availables[k];
+    p.textContent = k + ": " + availables[k];
     del.textContent = '-';
-    del.addEventListener('click', function(e) {
-      bg.removegame(k);
-      this.parentNode.style.display = 'none';
-    });
+    var cb = function(k) {
+      return function() {
+        bg.removegame(k);
+        this.parentNode.style.display = 'none';
+      }
+    }
+    del.addEventListener('click', cb(k));
     item.appendChild(p);
     item.appendChild(del);
 
     list.appendChild(item);
   }
+
+  Object.keys(allgames).filter(function(e) {
+    return e.length > 0;
+  }).map(function(e) {
+    var option = document.createElement('option');
+    option.value = e;
+    option.textContent = e;
+    input.appendChild(option);
+  });
 }
 
 add.addEventListener('click', function(e) {
   var name = input.value;
-  if (name.length === 0) return;
   bg.addgame(name);
-  input.value = "";
   window.close();
 });

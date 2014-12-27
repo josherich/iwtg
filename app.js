@@ -8,6 +8,16 @@ var request = require('request');
 var cheerio = require('cheerio');
 var iconv = require('iconv-lite');
 
+var mongojs = require('mongojs');
+var db = mongojs('ps_alert', ['games']);
+db.games.ensureIndex({'createdAt': 1});
+
+db.on('error',function(err) {
+    console.log('database error', err);
+});
+db.on('ready',function() {
+    console.log('database connected');
+});
 // var Keen = require('keen.io');
 // Configure instance. Only projectId and writeKey are required to send data.
 // var client = Keen.configure({
@@ -25,8 +35,8 @@ server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function(){
 });
 
 router.use(express.static(path.resolve(__dirname, 'client')));
-var messages = [];
 var sockets = [];
+var games = {};
 
 var urls = [
 'http://www.chinagnet.com/bbs/exchangeps4/index.php?page_c=1&search_name=&gametype=&gamelang=&page=7',
@@ -37,89 +47,60 @@ var urls = [
 'http://www.chinagnet.com/bbs/exchangeps4/index.php?page_c=1&search_name=&gametype=&gamelang=&page=2',
 'http://www.chinagnet.com/bbs/exchangeps4/index.php?page_c=1&search_name=&gametype=&gamelang=&page=1'];
 
-var selector = '.item span';
-var gamenames = {};
-
-var text = '';
-var timer = null, timer2 = null, launched = null;
-
-function check(url, cb) {
-  var allnames = {};
-  for (var id in gamenames) {
-    for (var n in gamenames[id]) {
-      allnames[gamenames[id][n]] = true;
-    }
-  }
-
-  if (Object.keys(allnames).length === 0) return;
-  // console.log(allnames);
+function collect(url) {
   request({
     url: url,
     encoding: null
-  }, function (error, response, body) {
-      if (!error && response.statusCode == 200) {
-        var html = iconv.decode(body, 'GB2312');
-        var $ = cheerio.load(html);
-        var items = $('.item');
-        for (var i = 0; i < items.length; i++) {
-          var item = $(items[i]);
-          var anchor = $(item.find('h3'));
-          var result = {};
+  }, function(error, response, body) {
+    if (!error && response.statusCode == 200) {
+      var html = iconv.decode(body, 'GB2312');
+      var $ = cheerio.load(html);
+      var items = $('.item');
 
-          Object.keys(allnames).map(function(e) {
-            var name = new Buffer(e, 'base64').toString();
-            if (anchor.length && anchor.text().indexOf(name) >= 0) {
-              var _text = $(item.find('span')[1]).text();
-              _text = parseInt(_text.split('：')[1]);
-              result[e] = _text;
+      for (var i = 0; i < items.length; i++) {
+        var item = $(items[i]);
+        var anchor = $(item.find('h3'));
+        var _text = $(item.find('span')[1]).text();
+        if (_text.indexOf('：') > -1) {
+          var key = anchor.text();
+          var quan = _text.split('：')[1];
+          if (games[key]) {
+            if (games[key] != quan) {
+              games[key] = quan;
+              save(key, quan);
+              notifyall();
             }
-          });
-          // console.log('scan result all: ', result);
-
-          for (var r in result) {
-            for (var id in gamenames) {
-              if (gamenames[id] && gamenames[id].indexOf(r) > -1) {
-                cb(result, id);
-                continue; //gamenames for loop should be outside
-              }
-            }
+          } else {
+            games[key] = quan;
+            save(key, quan);
           }
-
-         }
+        } else {
+          games[_text] = null;
+        }
       }
-    });
+    }
+  });
+}
+
+function notifyall() {
+  console.log('notifyall');
+  broadcast('change', games);
+}
+
+function save(key, quan) {
+  console.log('key saved: ' + key + ': ', quan);
+  db.games.save({
+    name: key,
+    quan: quan,
+    createdAt: Date.now()
+  });
 }
 
 io.on('connection', function(socket) {
   var self = this;
   var id = socket.id;
   sockets.push(socket);
-
-  // console.log('timer init');
-  var emit = function(res, id) {
-    sockets.forEach(function (socket) {
-      if (socket.id == id) {
-        socket.emit('change', res);
-      }
-    });
-  };
-
-  if (!launched) {
-    urls.map(function(e) {
-      setInterval(check.bind(self, e, emit), 1000*60);
-    });
-    launched = 1;
-  }
-
-  setInterval(function() {
-    broadcast('heartbeat');
-  } , 1000*60);
-
-  socket.on('changename',function(data) {
-    // console.log(data);
-    gamenames[id] = data.split(',');
-    // console.log(gamenames[id]);
-  });
+  // notifyall();
 });
 
 function broadcast(event, data) {
@@ -128,3 +109,20 @@ function broadcast(event, data) {
   });
 }
 
+setInterval(function() {
+  broadcast('heartbeat');
+}, 1000*60);
+
+// setInterval(function() {
+//   notifyall();
+// }, 1000*6);
+
+setInterval(function() {
+  urls.map(function(url) {
+    collect(url);
+  });
+}, 1000*60);
+
+urls.map(function(url) {
+  collect(url);
+});

@@ -1,56 +1,53 @@
-var socket = io('https://iwantthatgame-josherich.c9.io');
-// var socket = io('http://localhost');
+// var socket = io('https://iwantthatgame-josherich.c9.io');
+// var socket = io('http://198.199.112.127:3000');
+var socket = io('http://localhost:3000');
 console.log('connect request initiated');
-var games = [];
+var games = {};
+var allgames = {};
 var availables = {};
 
 function addgame(name) {
-  var _name = btoa(unescape(encodeURIComponent(name)));
-  if (games.indexOf(_name) > -1) return;
-
-  games.push(_name);
-  console.log(games.join(','))
-  socket.emit('changename', games.join(','));
+  if (!name) return;
+  games[name] = true;
+  availables[name] = allgames[name];
+  setState();
 }
 
 function removegame(name) {
-
-  var i = games.indexOf(name);
-  if (i === -1) return;
+  console.log(name);
+  delete games[name];
   delete availables[name];
-  games.splice(i, 1);
-  console.log(games.join(','))
-  socket.emit('changename', games.join(','));
+  setState();
+}
+
+function setState() {
+  chrome.browserAction.setIcon({path:'logo128.png'});
+  for (var key in availables) {
+    if (parseInt(availables[key]) > 0) {
+      chrome.browserAction.setIcon({path:'logo128-g.png'});
+    }
+  }
 }
 
 socket.on('heartbeat', function(link) {
   console.log('heartbeat');
-  var opt = {
-    type: "basic",
-    title: "Not Available",
-    message: "Watch Dog is not available now.",
-    iconUrl: ""
-  }
 });
 
 socket.on('change', function(data) {
   console.log('game available: ', data);
-  for (var k in data) {
-    availables[k] = data[k];
-  }
-  for (var j in availables) {
-    if (parseInt(availables[j]) > 0) {
-      chrome.browserAction.setIcon({path:'logo128-g.png'});
-      return;
+  allgames = data;
+
+  for (var key in allgames) {
+    if (games[key]) {
+      availables[key] = allgames[key];
     }
   }
-  chrome.browserAction.setIcon({path:'logo128.png'});
-
-      // var opt = {
-      //       type: "basic",
-      //       title: "Available",
-      //       message: "Watch Dog is available now. http://www.chinagnet.com/bbs/exchangeps4/",
-      //       iconUrl: ""
-      // }
-      // chrome.notifications.create('', opt, function(){});
-    });
+  setState();
+  // var opt = {
+  //       type: "basic",
+  //       title: "Available",
+  //       message: "Watch Dog is available now. http://www.chinagnet.com/bbs/exchangeps4/",
+  //       iconUrl: ""
+  // }
+  // chrome.notifications.create('', opt, function(){});
+});
