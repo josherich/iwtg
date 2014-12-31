@@ -36,9 +36,14 @@ server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function(){
 
 router.use(express.static(path.resolve(__dirname, 'client')));
 var sockets = [];
-var games = {};
+var games = {
+  ps4: {},
+  ps3: {},
+  psv: {},
+  xbox: {}
+};
 
-var urls = [
+var urls_ps4 = [
 'http://www.chinagnet.com/bbs/exchangeps4/index.php?page_c=1&search_name=&gametype=&gamelang=&page=7',
 'http://www.chinagnet.com/bbs/exchangeps4/index.php?page_c=1&search_name=&gametype=&gamelang=&page=6',
 'http://www.chinagnet.com/bbs/exchangeps4/index.php?page_c=1&search_name=&gametype=&gamelang=&page=5',
@@ -47,7 +52,64 @@ var urls = [
 'http://www.chinagnet.com/bbs/exchangeps4/index.php?page_c=1&search_name=&gametype=&gamelang=&page=2',
 'http://www.chinagnet.com/bbs/exchangeps4/index.php?page_c=1&search_name=&gametype=&gamelang=&page=1'];
 
-function collect(url) {
+var urls_ps3 = [
+  'http://www.chinagnet.com/bbs/exchangeps3/index.php?page_c=1&search_name=&gametype=&gamelang=&page=1',
+  'http://www.chinagnet.com/bbs/exchangeps3/index.php?page_c=1&search_name=&gametype=&gamelang=&page=2',
+  'http://www.chinagnet.com/bbs/exchangeps3/index.php?page_c=1&search_name=&gametype=&gamelang=&page=3',
+  'http://www.chinagnet.com/bbs/exchangeps3/index.php?page_c=1&search_name=&gametype=&gamelang=&page=4',
+  'http://www.chinagnet.com/bbs/exchangeps3/index.php?page_c=1&search_name=&gametype=&gamelang=&page=5',
+  'http://www.chinagnet.com/bbs/exchangeps3/index.php?page_c=1&search_name=&gametype=&gamelang=&page=6',
+  'http://www.chinagnet.com/bbs/exchangeps3/index.php?page_c=1&search_name=&gametype=&gamelang=&page=7',
+  'http://www.chinagnet.com/bbs/exchangeps3/index.php?page_c=1&search_name=&gametype=&gamelang=&page=8',
+  'http://www.chinagnet.com/bbs/exchangeps3/index.php?page_c=1&search_name=&gametype=&gamelang=&page=9',
+  'http://www.chinagnet.com/bbs/exchangeps3/index.php?page_c=1&search_name=&gametype=&gamelang=&page=10',
+  'http://www.chinagnet.com/bbs/exchangeps3/index.php?page_c=1&search_name=&gametype=&gamelang=&page=11',
+  'http://www.chinagnet.com/bbs/exchangeps3/index.php?page_c=1&search_name=&gametype=&gamelang=&page=12',
+  'http://www.chinagnet.com/bbs/exchangeps3/index.php?page_c=1&search_name=&gametype=&gamelang=&page=13',
+  'http://www.chinagnet.com/bbs/exchangeps3/index.php?page_c=1&search_name=&gametype=&gamelang=&page=14',
+  'http://www.chinagnet.com/bbs/exchangeps3/index.php?page_c=1&search_name=&gametype=&gamelang=&page=15',
+  'http://www.chinagnet.com/bbs/exchangeps3/index.php?page_c=1&search_name=&gametype=&gamelang=&page=16',
+  'http://www.chinagnet.com/bbs/exchangeps3/index.php?page_c=1&search_name=&gametype=&gamelang=&page=17',
+  'http://www.chinagnet.com/bbs/exchangeps3/index.php?page_c=1&search_name=&gametype=&gamelang=&page=18',
+  'http://www.chinagnet.com/bbs/exchangeps3/index.php?page_c=1&search_name=&gametype=&gamelang=&page=19',
+  'http://www.chinagnet.com/bbs/exchangeps3/index.php?page_c=1&search_name=&gametype=&gamelang=&page=20',
+  'http://www.chinagnet.com/bbs/exchangeps3/index.php?page_c=1&search_name=&gametype=&gamelang=&page=21',
+  'http://www.chinagnet.com/bbs/exchangeps3/index.php?page_c=1&search_name=&gametype=&gamelang=&page=22',
+  'http://www.chinagnet.com/bbs/exchangeps3/index.php?page_c=1&search_name=&gametype=&gamelang=&page=23',
+  'http://www.chinagnet.com/bbs/exchangeps3/index.php?page_c=1&search_name=&gametype=&gamelang=&page=24',
+  'http://www.chinagnet.com/bbs/exchangeps3/index.php?page_c=1&search_name=&gametype=&gamelang=&page=25',
+  'http://www.chinagnet.com/bbs/exchangeps3/index.php?page_c=1&search_name=&gametype=&gamelang=&page=26',
+  'http://www.chinagnet.com/bbs/exchangeps3/index.php?page_c=1&search_name=&gametype=&gamelang=&page=27',
+  'http://www.chinagnet.com/bbs/exchangeps3/index.php?page_c=1&search_name=&gametype=&gamelang=&page=28',
+  'http://www.chinagnet.com/bbs/exchangeps3/index.php?page_c=1&search_name=&gametype=&gamelang=&page=29'
+];
+
+var urls_xbox = [
+  'http://www.chinagnet.com/bbs/exchangeone/index.php?page_c=1&search_name=&gametype=&gamelang=&page=1',
+  'http://www.chinagnet.com/bbs/exchangeone/index.php?page_c=1&search_name=&gametype=&gamelang=&page=2',
+  'http://www.chinagnet.com/bbs/exchangeone/index.php?page_c=1&search_name=&gametype=&gamelang=&page=3',
+  'http://www.chinagnet.com/bbs/exchangeone/index.php?page_c=1&search_name=&gametype=&gamelang=&page=4',
+  'http://www.chinagnet.com/bbs/exchangeone/index.php?page_c=1&search_name=&gametype=&gamelang=&page=5',
+  'http://www.chinagnet.com/bbs/exchangeone/index.php?page_c=1&search_name=&gametype=&gamelang=&page=6',
+];
+
+var urls_psv = [
+  'http://www.chinagnet.com/bbs/exchange/index.php?page_c=1&search_name=&gametype=&gamelang=&page=1',
+  'http://www.chinagnet.com/bbs/exchange/index.php?page_c=1&search_name=&gametype=&gamelang=&page=2',
+  'http://www.chinagnet.com/bbs/exchange/index.php?page_c=1&search_name=&gametype=&gamelang=&page=3',
+  'http://www.chinagnet.com/bbs/exchange/index.php?page_c=1&search_name=&gametype=&gamelang=&page=4',
+  'http://www.chinagnet.com/bbs/exchange/index.php?page_c=1&search_name=&gametype=&gamelang=&page=5',
+  'http://www.chinagnet.com/bbs/exchange/index.php?page_c=1&search_name=&gametype=&gamelang=&page=6',
+  'http://www.chinagnet.com/bbs/exchange/index.php?page_c=1&search_name=&gametype=&gamelang=&page=7',
+  'http://www.chinagnet.com/bbs/exchange/index.php?page_c=1&search_name=&gametype=&gamelang=&page=8',
+  'http://www.chinagnet.com/bbs/exchange/index.php?page_c=1&search_name=&gametype=&gamelang=&page=9',
+  'http://www.chinagnet.com/bbs/exchange/index.php?page_c=1&search_name=&gametype=&gamelang=&page=10',
+  'http://www.chinagnet.com/bbs/exchange/index.php?page_c=1&search_name=&gametype=&gamelang=&page=11',
+  'http://www.chinagnet.com/bbs/exchange/index.php?page_c=1&search_name=&gametype=&gamelang=&page=12',
+  'http://www.chinagnet.com/bbs/exchange/index.php?page_c=1&search_name=&gametype=&gamelang=&page=13',
+];
+
+function collect(url, platform) {
   request({
     url: url,
     encoding: null
@@ -64,18 +126,18 @@ function collect(url) {
         if (_text.indexOf('：') > -1) {
           var key = anchor.text();
           var quan = _text.split('：')[1];
-          if (games[key]) {
-            if (games[key] != quan) {
-              games[key] = quan;
-              save(key, quan);
+          if (games[platform][key]) {
+            if (games[platform][key] != quan) {
+              games[platform][key] = quan;
+              save(key, quan, platform);
               notifyall();
             }
           } else {
-            games[key] = quan;
-            save(key, quan);
+            games[platform][key] = quan;
+            save(key, quan, platform);
           }
         } else {
-          games[_text] = null;
+          games[platform][_text] = null;
         }
       }
     }
@@ -91,11 +153,12 @@ function notify(socket) {
   socket.emit('change', games);
 }
 
-function save(key, quan) {
+function save(key, quan, platform) {
   console.log('key saved: ' + key + ': ', quan);
   db.games.save({
     name: key,
     quan: quan,
+    platform: platform,
     createdAt: Date.now()
   });
 }
@@ -122,11 +185,29 @@ setInterval(function() {
 // }, 1000*6);
 
 setInterval(function() {
-  urls.map(function(url) {
-    collect(url);
+  urls_ps4.map(function(url) {
+    collect(url, 'ps4');
+  });
+  urls_ps3.map(function(url) {
+    collect(url, 'ps3');
+  });
+  urls_psv.map(function(url) {
+    collect(url, 'psv');
+  });
+  urls_xbox.map(function(url) {
+    collect(url, 'xbox');
   });
 }, 1000*60);
 
-urls.map(function(url) {
-  collect(url);
+urls_ps4.map(function(url) {
+  collect(url, 'ps4');
+});
+urls_ps3.map(function(url) {
+  collect(url, 'ps3');
+});
+urls_psv.map(function(url) {
+  collect(url, 'psv');
+});
+urls_xbox.map(function(url) {
+  collect(url, 'xbox');
 });
