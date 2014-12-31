@@ -2,31 +2,63 @@
 var socket = io('http://198.199.112.127:3000');
 // var socket = io('http://localhost:3000');
 console.log('connect request initiated');
-var games = {};
+var watched = restoreWatched() || {
+  ps4: {},
+  ps3: {},
+  psv: {},
+  xbox: {}
+};
+
 var allgames = {};
-var availables = {};
+
+if (!localStorage.platform) localStorage.platform = 'ps4';
+var platform = localStorage.platform || 'ps4';
+
+function setPlatform(p) {
+  if (!p) return;
+  platform = p;
+  localStorage.platform = p;
+}
 
 function addgame(name) {
   if (!name) return;
-  games[name] = true;
-  availables[name] = allgames[name];
+  watched[platform][name] = allgames[platform][name];
   setState();
+  saveWatched(watched);
 }
 
 function removegame(name) {
-  console.log(name);
-  delete games[name];
-  delete availables[name];
+  delete watched[platform][name];
   setState();
+  saveWatched(watched);
 }
 
 function setState() {
   chrome.browserAction.setIcon({path:'logo128.png'});
-  for (var key in availables) {
-    if (parseInt(availables[key]) > 0) {
+  for (var key in watched[platform]) {
+    if (parseInt(watched[platform][key]) > 0) {
       chrome.browserAction.setIcon({path:'logo128-g.png'});
     }
   }
+}
+
+function saveWatched(watched) {
+  try {
+    localStorage.watched = JSON.stringify(watched);
+  } catch (e) {
+    console.log('parse error');
+  }
+}
+
+function restoreWatched() {
+  var watched;
+  try {
+    watched = JSON.parse(localStorage.watched);
+  } catch (e) {
+    console.log('parse error');
+    return null;
+  }
+  return watched;
 }
 
 socket.on('heartbeat', function(link) {
@@ -38,10 +70,11 @@ socket.on('change', function(data) {
   allgames = data;
 
   for (var key in allgames) {
-    if (games[key]) {
-      availables[key] = allgames[key];
+    if (watched[platform][key]) {
+      watched[platform][key] = allgames[platform][key];
     }
   }
+  saveWatched(watched);
   setState();
   // var opt = {
   //       type: "basic",
